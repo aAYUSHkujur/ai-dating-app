@@ -1,9 +1,7 @@
-import { Text, View } from "react-native";
-const index = () => {
-  return (
-    <View>
-      <Text>index</Text>
-    </View>
-  );
+import React from "react";
+import { ClerkProviders } from "./ClerkProvider";
+
+const AppProviders = ({ children }: { children: React.ReactNode }) => {
+  return <ClerkProviders>{children}</ClerkProviders>;
 };
-export default index;
+export default AppProviders;
