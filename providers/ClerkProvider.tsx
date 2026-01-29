@@ -1,14 +1,14 @@
 import { tokenCache } from "@/lib/auth";
 import {
-    ClerkLoaded,
-    ClerkProvider as ClerkProviderBase,
+  ClerkLoaded,
+  ClerkProvider as ClerkProviderBase,
 } from "@clerk/clerk-expo";
 
-const clerkPublishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+const clerkPublishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 if (!clerkPublishableKey) {
   throw new Error(
-    "Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in environment variables"
+    "Missing EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in environment variables",
   );
 }
 
