@@ -4,12 +4,11 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
-
 function RootLayoutNav() {
   const { isSignedIn } = useAuth();
+
+  console.log("isSignedIn:", isSignedIn);
+  console.log("where to go: ", !isSignedIn ? "(auth)" : "(app)");
 
   return (
     <>
