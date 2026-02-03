@@ -121,6 +121,36 @@ export default function Page() {
     }
   };
 
+  const handleVerifySecondFactor = async (code: string) => {
+    if (!isLoaded) return;
+
+    const result = await signIn.attemptSecondFactor({
+      strategy: "email_code",
+      code,
+    });
+
+    if (result.status === "complete") {
+      await setActive({ session: result.createdSessionId });
+    } else {
+      throw new Error(`Verification incomplete: ${result.status}`);
+    }
+  };
+
+  if (needsSecondFactor) {
+    return (
+      <CodeVerification
+        email={email}
+        title="Verify your identity"
+        icon="shield-checkmark-outline"
+        onVerify={handleVerifySecondFactor}
+        onBack={() => setNeedsSecondFactor(false)}
+        backButtonText="Back to sign in"
+      />
+    );
+  }
+
+  const isValid = email.trim().length > 0 && password.length >= 6;
+
   return (
     <View style={styles.container}>
       <LinearGradient
