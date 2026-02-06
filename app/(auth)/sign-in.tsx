@@ -1,11 +1,9 @@
-import { CodeVerification } from "@/components/auth";
-import { hapticButtonPress } from "@/lib/haptics";
-import { shadowPrimary } from "@/lib/styles/shadows";
 import { useSignIn } from "@clerk/clerk-expo";
+import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import { SymbolView } from "expo-symbols";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Pressable,
@@ -28,6 +26,10 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { CodeVerification } from "@/components/auth";
+import { hapticButtonPress } from "@/lib/haptics";
+import { shadowPrimary } from "@/lib/styles/shadows";
+
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 // Floating heart decoration component
@@ -46,19 +48,23 @@ function FloatingHeart({
 }) {
   const translateY = useSharedValue(0);
 
-  // Start floating animation
-  translateY.value = withRepeat(
-    withSequence(
-      withTiming(-10, { duration: 2000 }),
-      withTiming(10, { duration: 2000 }),
-    ),
-    -1,
-    true,
-  );
+  useEffect(() => {
+    // Start animation once
+    translateY.value = withRepeat(
+      withSequence(
+        withTiming(-15, { duration: 2000 }),
+        withTiming(15, { duration: 2000 })
+      ),
+      -1,
+      true
+    );
+  }, []);
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
-  }));
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
 
   return (
     <Animated.View
@@ -73,12 +79,12 @@ function FloatingHeart({
         animatedStyle,
       ]}
     >
-      <SymbolView name="heart.fill" size={size} tintColor="#FF6B6B" />
+      <Ionicons name="heart-outline" size={size} color="#FF6B6B" />
     </Animated.View>
   );
 }
 
-export default function Page() {
+export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
   const insets = useSafeAreaInsets();
 
@@ -91,7 +97,6 @@ export default function Page() {
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
 
-  // Handle the submission of the sign-in form
   const handleSignIn = async () => {
     if (!isLoaded) return;
 
@@ -162,21 +167,9 @@ export default function Page() {
 
       {/* Decorative floating hearts */}
       <FloatingHeart size={24} top={80} left={40} delay={0} opacity={0.15} />
-      <FloatingHeart
-        size={18}
-        top={140}
-        left={320}
-        delay={200}
-        opacity={0.12}
-      />
+      <FloatingHeart size={18} top={140} left={320} delay={200} opacity={0.12} />
       <FloatingHeart size={32} top={560} left={20} delay={400} opacity={0.1} />
-      <FloatingHeart
-        size={20}
-        top={600}
-        left={340}
-        delay={600}
-        opacity={0.08}
-      />
+      <FloatingHeart size={20} top={600} left={340} delay={600} opacity={0.08} />
 
       <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -204,7 +197,16 @@ export default function Page() {
                 end={{ x: 1, y: 1 }}
                 style={styles.logoGradient}
               >
-                <SymbolView name="heart.fill" size={42} tintColor="#FFFFFF" />
+                <Ionicons
+                  name="heart"
+                  size={42}
+                  style={{
+                    color: "#FFFFFF",
+                    textShadowColor: "rgba(255,255,255,0.6)",
+                    textShadowRadius: 6,
+                  }}
+                />
+
               </LinearGradient>
             </View>
             <Text style={styles.logoText}>Heartly</Text>
@@ -346,9 +348,7 @@ export default function Page() {
 
             {/* Sign Up Link */}
             <View style={styles.signUpContainer}>
-              <Text style={styles.signUpText}>
-                Don&apos;t have an account?{" "}
-              </Text>
+              <Text style={styles.signUpText}>Don&apos;t have an account? </Text>
               <Link href="/(auth)/sign-up" asChild>
                 <TouchableOpacity onPress={hapticButtonPress}>
                   <Text style={styles.signUpLink}>Sign Up</Text>
