@@ -224,7 +224,6 @@ export default function SignUpScreen() {
                     textShadowRadius: 6,
                   }}
                 />
-
               </LinearGradient>
             </View>
             <Text style={styles.logoText}>Join Heartly</Text>

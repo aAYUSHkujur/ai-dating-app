@@ -1,9 +1,11 @@
+import React from 'react';
 import { Text, View } from "react-native";
-const StartPage = () => {
-  return (
-    <View>
-      <Text>StartPage</Text>
-    </View>
-  );
+
+const index = () => {
+    return (
+        <View>
+            <Text>Index</Text>
+        </View>
+    );
 };
-export default StartPage;
+export default index;

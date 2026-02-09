@@ -1,9 +1,9 @@
-import { Text, View } from "react-native";
-const _layout = () => {
-  return (
-    <View>
-      <Text>_layout</Text>
-    </View>
-  );
-};
-export default _layout;
+import { Tabs } from "expo-router";
+
+export default function TabsLayout() {
+    return (
+        <Tabs>
+            <Tabs.Screen name="index" options={{ title: "Home" }} />
+        </Tabs>
+    );
+}
