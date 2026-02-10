@@ -16,7 +16,7 @@ interface ClerkProviderProps {
   children: React.ReactNode;
 }
 
-export const ClerkProviders = ({ children }: ClerkProviderProps) => {
+export const ClerkProvider = ({ children }: ClerkProviderProps) => {
   return (
     <ClerkProviderBase
       publishableKey={clerkPublishableKey}
